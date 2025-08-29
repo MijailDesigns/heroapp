@@ -1,10 +1,10 @@
 import { RouterProvider } from "react-router";
-import { router as appRouter } from "./router/app.router";
+import { router } from "./router/app.router";
 
 const HeroesApp = () => {
   return (
     <>
-      <RouterProvider router={appRouter} />
+      <RouterProvider router={router} />
     </>
   );
 };
