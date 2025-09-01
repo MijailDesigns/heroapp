@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router";
-import HomePage from "../heroes/pages/home/HomePage";
+import { HomePage } from "../heroes/pages/home/HomePage";
 import HeroPage from "@/heroes/pages/hero/HeroPage";
 import HeroesLayout from "@/heroes/layouts/HeroesLayout";
 import AdminLayout from "@/admin/layouts/AdminLayout";
