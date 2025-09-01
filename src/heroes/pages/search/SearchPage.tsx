@@ -1,5 +1,6 @@
 import CustomJumbotron from "@/components/custom/CustomJumbotron";
 import HeroStats from "@/heroes/components/HeroStats";
+import SearchControl from "./ui/SearchControl";
 
 const SearchPage = () => {
   return (
@@ -11,6 +12,9 @@ const SearchPage = () => {
 
       {/* Stats Dashboard */}
       <HeroStats />
+
+      {/* Filter and Search */}
+      <SearchControl />
     </>
   );
 };
