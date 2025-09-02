@@ -15,13 +15,14 @@ export const HomePage = () => {
   const activeTab = searchParams.get("tab") ?? "all";
   const page = searchParams.get("page") ?? "1";
   const limit = searchParams.get("limit") ?? "6";
+  const category = searchParams.get("category") ?? "all";
 
   const selectedTab = useMemo(() => {
     const validTabs = ["all", "favorites", "heroes", "villains"];
     return validTabs.includes(activeTab) ? activeTab : "all";
   }, [activeTab]);
 
-  const { data: heroesReponse } = usePaginatedHero(+page, +limit);
+  const { data: heroesReponse } = usePaginatedHero(+page, +limit, category);
 
   const { data: summmary } = useHeroSummary();
 
@@ -47,6 +48,8 @@ export const HomePage = () => {
               onClick={() =>
                 setSearchParams((prev) => {
                   prev.set("tab", "all");
+                  prev.set("category", "all");
+                  prev.set("page", "1");
                   return prev;
                 })
               }
@@ -59,6 +62,7 @@ export const HomePage = () => {
               onClick={() =>
                 setSearchParams((prev) => {
                   prev.set("tab", "favorites");
+                  prev.set("category", "favorites");
                   return prev;
                 })
               }
@@ -70,6 +74,8 @@ export const HomePage = () => {
               onClick={() =>
                 setSearchParams((prev) => {
                   prev.set("tab", "heroes");
+                  prev.set("category", "hero");
+                  prev.set("page", "1");
                   return prev;
                 })
               }
@@ -81,6 +87,8 @@ export const HomePage = () => {
               onClick={() =>
                 setSearchParams((prev) => {
                   prev.set("tab", "villains");
+                  prev.set("category", "villain");
+                  prev.set("page", "1");
                   return prev;
                 })
               }
