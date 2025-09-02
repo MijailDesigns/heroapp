@@ -9,6 +9,7 @@ import { getHeroesByPageAction } from "@/heroes/actions/get-heroes-by-page.actio
 import { useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "react-router";
 import { useMemo } from "react";
+import { getSummary } from "@/heroes/actions/get-summary.action";
 
 export const HomePage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -25,6 +26,12 @@ export const HomePage = () => {
   const { data: heroesReponse } = useQuery({
     queryKey: ["heroes", { page, limit }],
     queryFn: () => getHeroesByPageAction(+page, +limit),
+    staleTime: 1000 * 60 * 5, // 5 minutos
+  });
+
+  const { data: summmary } = useQuery({
+    queryKey: ["summary-information"],
+    queryFn: () => getSummary(),
     staleTime: 1000 * 60 * 5, // 5 minutos
   });
 
@@ -54,7 +61,7 @@ export const HomePage = () => {
                 })
               }
             >
-              All Characters (16)
+              All Characters ({summmary?.totalHeroes})
             </TabsTrigger>
             <TabsTrigger
               value="favorites"
@@ -77,7 +84,7 @@ export const HomePage = () => {
                 })
               }
             >
-              Heroes (12)
+              Heroes ({summmary?.heroCount})
             </TabsTrigger>
             <TabsTrigger
               value="villains"
@@ -88,7 +95,7 @@ export const HomePage = () => {
                 })
               }
             >
-              Villains (2)
+              Villains ({summmary?.villainCount})
             </TabsTrigger>
           </TabsList>
 
