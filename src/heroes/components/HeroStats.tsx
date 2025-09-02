@@ -2,9 +2,21 @@ import { Badge } from "@/components/ui/badge";
 import { Heart, Trophy, Users, Zap } from "lucide-react";
 import HeroStatCard from "./HeroStatCard";
 import useHeroSummary from "../hooks/useHeroSummary";
+import { use } from "react";
+import { FavoriteHeroContext } from "../context/FavoriteHeroContext";
 
 const HeroStats = () => {
-  const { data: summmary } = useHeroSummary();
+  const { data: summmary, isError } = useHeroSummary();
+
+  const { favoriteCount } = use(FavoriteHeroContext);
+
+  if (isError) {
+    return <h3>Error...</h3>;
+  }
+
+  if (!summmary) {
+    return <h3>Loading...</h3>;
+  }
 
   return (
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
@@ -27,8 +39,10 @@ const HeroStats = () => {
         title="Favorites"
         icon={<Heart className="h-4 w-4 text-muted-foreground" />}
       >
-        <div className="text-2xl font-bold text-red-600">3</div>
-        <p className="text-xs text-muted-foreground">18.8% of total</p>
+        <div className="text-2xl font-bold text-red-600">{favoriteCount}</div>
+        <p className="text-xs text-muted-foreground">
+          {((favoriteCount / summmary?.totalHeroes) * 100).toFixed(2)}% of total
+        </p>
       </HeroStatCard>
 
       <HeroStatCard

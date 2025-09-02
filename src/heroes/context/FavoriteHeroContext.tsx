@@ -24,7 +24,7 @@ const getFavoritesFromLocalStorage = () => {
   return favorites ? JSON.parse(favorites) : [];
 };
 
-const FavoriteHeroProvider = ({ children }: PropsWithChildren) => {
+export const FavoriteHeroProvider = ({ children }: PropsWithChildren) => {
   const [favorites, setFavorites] = useState<Hero[]>(
     getFavoritesFromLocalStorage()
   );
@@ -61,5 +61,3 @@ const FavoriteHeroProvider = ({ children }: PropsWithChildren) => {
     </FavoriteHeroContext>
   );
 };
-
-export default FavoriteHeroProvider;
