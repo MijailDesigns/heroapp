@@ -2,8 +2,22 @@ import CustomJumbotron from "@/components/custom/CustomJumbotron";
 import HeroStats from "@/heroes/components/HeroStats";
 import SearchControl from "./ui/SearchControl";
 import CustomBreadcrumbs from "@/components/custom/CustomBreadcrumbs";
+import { useQuery } from "@tanstack/react-query";
+import HeroGrid from "@/heroes/components/HeroGrid";
+import { useSearchParams } from "react-router";
+import { searchHeroessAction } from "@/heroes/actions/search-heros.action";
 
 const SearchPage = () => {
+  const [searchParams] = useSearchParams();
+
+  const name = searchParams.get("name") ?? "";
+
+  const { data: searchedHeroes = [] } = useQuery({
+    queryKey: ["search", { name }],
+    queryFn: () => searchHeroessAction({ name }),
+    staleTime: 1000 * 60 * 5,
+  });
+
   return (
     <>
       <CustomJumbotron
@@ -25,6 +39,8 @@ const SearchPage = () => {
 
       {/* Filter and Search */}
       <SearchControl />
+
+      <HeroGrid heroes={searchedHeroes} />
     </>
   );
 };
